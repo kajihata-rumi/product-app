@@ -1,0 +1,15 @@
+# mac
+.DS_Store
+
+# Laravel
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+
+# Docker
+docker/mysql/data
+
+# logs
+*.log
