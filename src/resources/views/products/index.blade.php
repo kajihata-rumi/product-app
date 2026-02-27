@@ -36,13 +36,9 @@
 
                 {{-- 検索 --}}
                 <form method="GET" action="{{ url('/products/search') }}">
+                    <input type="hidden" name="sort" value="{{ request('sort') }}">
                     <div class="filter__search">
-                        <input
-                            type="text"
-                            name="keyword"
-                            value="{{ request('keyword') }}"
-                            placeholder="商品名で検索"
-                            class="filter__input">
+                        <input type="text" name="keyword" value="{{ request('keyword') }}" class="filter__input" placeholder="商品名で検索">
                         <button type="submit" class="filter__btn">検索</button>
                     </div>
                 </form>
@@ -50,7 +46,8 @@
                 {{-- 並び替え --}}
                 <h2 class="filter__label">価格順で表示</h2>
 
-                <form method="GET" action="{{ url('/products') }}">
+                <form method="GET" action="{{ url('/products/search') }}">
+                    <input type="hidden" name="keyword" value="{{ request('keyword') }}">
                     <select name="sort" class="filter__select" onchange="this.form.submit()">
                         <option value="" {{ (request('sort') ?? '') === '' ? 'selected' : '' }}>
                             価格で並び替え
@@ -89,14 +86,12 @@
                     <a href="{{ route('products.detail', $product->id) }}" class="product-card">
 
                         <div class="product-card__img">
-                            @php
-                            $storagePath = 'storage/uploads/' . $product->image;
-                            $imagePath = file_exists(public_path($storagePath))
-                            ? $storagePath
-                            : 'fruits-img/' . $product->image;
-                            @endphp
-
-                            <img src="{{ asset($imagePath) }}" alt="{{ $product->name }}">
+                            <img
+                                class="product-form__image"
+                                src="{{ str_contains($product->image, '/')
+            ? asset($product->image)
+            : asset('storage/uploads/' . $product->image) }}"
+                                alt="{{ $product->name }}">
                         </div>
 
                         <div class="product-card__meta">
@@ -109,7 +104,9 @@
                 </div>
 
                 {{-- ページネーション --}}
-                {{ $products->links('vendor.pagination.custom') }}
+                <div class="pagination-wrap">
+                    {{ $products->links('vendor.pagination.custom') }}
+                </div>
             </main>
 
         </div>

@@ -25,11 +25,13 @@
         <div class="product-form__top">
             {{-- 左：画像 + ファイル --}}
             <div class="product-form__left">
-
                 <div class="image-wrap">
-                    <div class="breadcrumb">
-                        <a href="{{ route('products.index') }}">商品一覧</a> &gt; {{ $product->name }}
-                    </div>
+                    <img
+                        class="product-form__image"
+                        src="{{ str_contains($product->image, '/')
+          ? asset($product->image)
+          : asset('storage/uploads/' . $product->image) }}"
+                        alt="{{ $product->name }}">
                 </div>
 
                 @php
@@ -38,7 +40,6 @@
                 ? $storagePath
                 : 'fruits-img/' . $product->image;
                 @endphp
-                <img src="{{ asset($product->image) }}" class="product-image" alt="{{ $product->name }}">
 
                 <input class="product-form__file" type="file" name="image">
                 @error('image') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror

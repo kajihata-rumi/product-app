@@ -1,66 +1,144 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+README
+	GitHubURL: https://github.com/kajihata-rumi/product-app.git
+	アクセスURL: http://localhost/products
+	phpMyAdmin: http://localhost:8080
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+    バリデーション実装箇所
+        src/app/Http/Controllers/ProductController.php
+    bladeファイル名
+        商品一覧・検索: src/resources/views/products/index.blade.php
+        商品詳細・更新・削除: src/resources/views/products/detail.blade.php
+        商品登録: src/resources/views/products/register.blade.php
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+0.アプリケーション名
+	coachtech もぎたて
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.アプリケーション概要
+	商品管理のためのアプリケーション
+	#画面ID・画面名・パス
+	PG01 商品一覧 /products
+	PG02 商品詳細 /products/detail/{productId}
+	PG03 商品更新 /products/{productId}/update
+	PG04 商品登録 /products/register
+	PG05 検索 /products/search
+	PG06 削除 /products/{productId}/delete
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    PG01:商品一覧
+    全商品（ダミーデータ10件）が表示されている
+    「商品カード」（商品画像・商品名・値段）が表示されている
+    ページネーションを使用し6件ごとの商品を表示することができる
+    「+商品を追加」ボタンをクリックすると商品登録ページが開く
 
-## Learning Laravel
+    PG02:商品詳細
+    「商品カード」をクリックすると商品詳細ページが開く
+    （一覧画面・検索結果画面どちらからでも開く）
+    商品詳細情報が表示されている（商品名・値段・季節・商品画像・商品説明）
+    「戻る」ボタンまたは左上の「商品一覧」をクリックすると商品一覧ページに戻る
+    「変更を保存」ボタンをクリックすることで商品情報が変更され商品一覧ページに戻る
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    PG03:商品更新
+    「変更を保存」ボタンをクリックすることで商品情報が変更されて商品一覧ページに戻る
+    「戻る」ボタンをクリックすると一覧ページに戻る
+    変更時に季節を複数選択できる
+    商品更新時に、必須項目が不足していないか確認できる
+    （全ての項目が入力必須）
+    必須項目が不足していたらエラーメッセージを赤文字で表示する
+    ローカルから商品画像を選択した時にプレビュー表示で確認できる
+    商品画像をアップロードできる
+    画像はlaravelのstorageディレクトリに保存することができる
+    シンボリックリンクを使用した画像保存をすることができる
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    PG04:商品登録
+    「登録」ボタンをクリックすると新しい商品情報の登録が完了し一覧ページに戻る
+    （商品名・値段・季節・商品画像・商品説明）
+    「戻る」ボタンをクリックすると一覧ページに戻る
+    登録時に季節を複数選択できる
+    商品登録時に、必須項目が不足していないか確認できる
+    （全ての項目が入力必須）
+    必須項目が不足していたらエラーメッセージを赤文字で表示する
+    ローカルから商品画像を選択した時にプレビュー表示で確認できる
+    商品画像をアップロードできる
+    画像はlaravelのstorageディレクトリに保存することができる
+    シンボリックリンクを使用した画像保存をすることができる
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    PG05:商品検索
+    検索ボタンをクリックすると商品名検索と並び替え条件に一致した商品を表示することができる
+    商品名で検索ができる
+    商品名で部分一致検索ができる
+    価格による並び替えができる
+    「高い順に表示」と「低い順に表示」から選択することができる
+    並び替え結果表示の際に並び替え条件がモーダル表示されている
+    並び替え条件の「×」ボタンをクリックすると並び替え検索をリセットすることができる
+    検索ボタンをクリックすると商品名検索と並び替え条件に一致した商品を表示することができる
+    （価格順表示と商品名検索を同時に行うことができる）
 
-## Laravel Sponsors
+    PG06:商品削除
+    赤いゴミ箱アイコンをクリックすると商品情報の削除が完了し一覧ページに戻る
+    削除前に確認のダイアログを表示することができる
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2.ER図
+![ER図](./er.png)
+productsとseasonsは多対多の関係のため、中間テーブルproduct_seasonで管理
 
-### Premium Partners
+3.テーブル構成
+	- products
+	- seasons
+	- product_season（中間テーブル）
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+	## リレーション
+	- products と seasons は多対多の関係
+	- product_season テーブルで管理
 
-## Contributing
+4.ダミーデータ
+	【productsテーブル】商品情報のダミーデータを10件作成
+	【seasonsテーブル】季節情報(春・夏・秋・冬)のダミーデータを4件作成
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5.使用技術（実行環境）
+	- PHP 8.1.34
+	- Laravel 10.50.2
+	- MySQL 8.0.44
+	- nginx 1.21.1
+	- Docker 29.2.0
+	- Docker Compose v5.0.2
+	- Docker Desktop v4.62.0
 
-## Code of Conduct
+6.環境構築
+    ・クローン
+        git clone https://github.com/kajihata-rumi/product-app.git
+        cd product-app
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ・コンテナ起動
+        docker-compose up -d
 
-## Security Vulnerabilities
+    ・PHPコンテナに入る
+        docker-compose exec php bash
+        # Laravelプロジェクトルートに移動
+        cd /var/www
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ・依存関係
+        composer install
 
-## License
+    ・env作成
+        cp .env.example .env
+        # .env は含まれないので .env.example から作成して下記のDB設定にする
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ・.env のDB設定
+        DB_CONNECTION=mysql
+        DB_HOST=mysql
+        DB_PORT=3306
+        DB_DATABASE=laravel_db
+        DB_USERNAME=laravel_user
+        DB_PASSWORD=laravel_pass
+
+    ・Laravel初期化
+        php artisan key:generate
+
+    ・DB反映
+        php artisan migrate
+
+    ・シーディング
+        php artisan db:seed
+
+    ・画像表示のためのシンボリックリンク
+        php artisan storage:link

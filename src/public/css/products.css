@@ -33,50 +33,38 @@ body {
     margin: 18px 0 20px;
 }
 
-/* 画面全体を中央寄せの箱にする */
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
-    margin-left: auto;
-}
-
 /* 一覧画面 */
-.page-products-index.layout {
-    max-width: 1200px;
-    margin: 0 auto;
+.page-products-index .layout {
+    max-width: 1100px;
+    margin: 0;
     padding: 0 40px;
-
-    display: flex;
-    grid-template-columns: 300px 1fr;
-    /* 左カラム幅固定 */
-    gap: 60px;
-    align-items: flex-start;
-    /* 上揃え */
+    max-width: 1100px;
+        margin-left: 40px;
+        /* 左に寄せつつ余白 */
+        margin-right: auto;
 }
-.page-products-index.sidebar {
+.page-products-index .sidebar {
     width: 340px;
     flex: 0 0 340px;
-    padding-left: 40px;
-        /* ←ここで一式右へ */
+    padding-left: 0;
 }
 
-.page-products-index.sidebar__title {
+.page-products-index .sidebar__title {
     font-size: 40px;
     margin: 0;
 }
 
-.page-products-index.product-area {
+.page-products-index .product-area {
     flex: 1;
 }
 
 /* 検索は縦並び固定 */
-.page-products-index.filter__search {
+.page-products-index .filter__search {
     display: grid;
     gap: 12px;
 }
 
-.page-products-index.filter__input {
+.page-products-index .filter__input {
     margin-top: 12px;
     width: 100%;
     height: 44px;
@@ -86,7 +74,8 @@ body {
     /* 角丸 */
 }
 
-.page-products-index.filter__btn {
+.page-products-index .filter__btn {
+    margin-top: 12px;
     height: 44px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -95,17 +84,21 @@ body {
         font-weight: bold;
 }
 
-.page-products-index.filter__block {
-    margin-top: 16px;
+.page-products-index .filter__block {
+    margin-top: 12px;
     display: grid;
     gap: 8px;
 }
 
-.page-products-index.filter__select {
-    height: 40px;
+.page-products-index .filter__select {
+        width: 100%;
+        height: 44px;
+        padding: 0 16px;
+        border: 1px solid #ddd;
 }
 
-.page-products-index.content {
+.page-products-index .content {
+    position: relative;
     width: 100%;
 }
 
@@ -126,11 +119,9 @@ body {
 .product-list,
 .product-grid {
 /* 画面が広がったらカードも広がるように */
-    max-width: 1400px;
-    /* ← まずこれ */
+    max-width: 1100px;
     width: 100%;
-/* “中央寄せ”になる原因を潰す */
-    margin: 0 auto;
+    margin: 0 ;
     display: grid;
     grid-template-columns: repeat(3, minmax(280px, 1fr));
     gap: 30px;
@@ -179,6 +170,9 @@ body {
 
 .pagination-nav {
     margin-top: 20px;
+    width: 100%;
+        display: flex;
+        justify-content: center;
 }
 
 .pagination-list {
@@ -372,7 +366,6 @@ justify-content: center;
     border: none;
     padding: 0;
     cursor: pointer;
-    margin-left: 70px;
 }
 
 .delete__btn img {
@@ -393,11 +386,10 @@ justify-content: center;
 }
 
 /* 画像 */
-.product-form__image {
+.product-card__img {
     width: 100%;
-    /* image-wrap 幅にフィット */
-    height: auto;
-    display: block;
+        max-width: 300px;
+        height: auto;
 }
 
 .season-label {
@@ -617,16 +609,9 @@ justify-content: center;
 
 /* 右カラムを「右に」押す＝左に余白を増やす */
 .layout .content {
-    margin-left: 80px;
-    /* ←ここを 60/80/100 で調整 */
+    margin-left: 0;
     flex: 1;
     min-width: 0;
-}
-
-/* 追加ボタンを右端へ */
-.layout .content .btn-add {
-    display: inline-flex;
-    margin-left: auto;
 }
 
 /* 商品一覧タイトル + 追加ボタンの行 */
@@ -662,32 +647,9 @@ justify-content: center;
     padding: 0 24px;
 }
 
-.page-title {
-    margin: 0;
-}
-
-.page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* ← タイトル左、ボタン右 */
-    width: 100%;
-        /* これ追加 */
-}
-
-.layout {
-    display: flex;
-    gap: 48px;
-    align-items: flex-start;
-    max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 40px;
-}
-
 /* +商品を追加ボタン */
 .btn-add {
     display: inline-flex;
-    /* ← blockやめる */
     align-items: center;
     justify-content: center;
     gap: 6px;
@@ -699,13 +661,88 @@ justify-content: center;
     color: black;
     font-weight: bold;
     width: fit-content;
-    margin-left: auto;
     white-space: nowrap;
 }
 
-/* 上段（商品一覧 + 追加ボタン）を下段(.layout)と同じ基準幅に揃える */
+.pagination-wrap {
+    max-width: 1100px;
+    margin: 24px auto 0;
+    padding: 0 40px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.page-title {
+    margin-top: 150px;
+    margin-bottom: 5px;
+}
+
+/* 画面全体を中央寄せの箱にする */
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0;
+    padding: 0;
+}
+
+.page-header .btn-add {
+    margin-left: auto;
+    /* 右端へ */
+}
+
+/* 一覧ページだけのレイアウトはこれに統一 */
+.page-products-index .products-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* タイトル行（商品一覧 + 追加ボタン） */
+.page-products-index .page-header {
     max-width: 1100px;
     margin: 0 auto 24px;
     padding: 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 2カラム全体 */
+.page-products-index .layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+
+    display: flex;
+    gap: 40px;
+    /* まず 48/60 じゃなく 40 に落とす */
+    align-items: flex-start;
+}
+
+/* 左カラム */
+.page-products-index .sidebar {
+    width: 320px;
+    /* 360→320にして右押しを減らす */
+    flex: 0 0 320px;
+}
+
+.image-wrap img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+}
+
+.product-form {
+    max-width: 1100px;
+    margin-top: 60px;
 }
