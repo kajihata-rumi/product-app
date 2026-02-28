@@ -110,11 +110,14 @@ productsとseasonsは多対多の関係のため、中間テーブルproduct_sea
 
     ・コンテナ起動
         docker-compose up -d
+        *docker-compose が無い場合は docker compose に読み替えてください
 
     ・PHPコンテナに入る
         docker-compose exec php bash
-        # Laravelプロジェクトルートに移動
+        *docker-compose が無い場合は docker compose に読み替えてください
+
         cd /var/www
+        *Laravelプロジェクトルートに移動
 
     ・依存関係
         composer install
@@ -134,8 +137,9 @@ productsとseasonsは多対多の関係のため、中間テーブルproduct_sea
     ・Laravel初期化
         php artisan key:generate
 
-    ・DB反映
-        php artisan migrate
+    ・DB初期化 & ダミーデータ投入
+        php artisan migrate:fresh --seed
+        *既存のデータは削除されます
 
     ・シーディング
         php artisan db:seed

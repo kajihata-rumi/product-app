@@ -14,93 +14,112 @@
         <div class="header__logo">mogitate</div>
     </header>
 
-    {{-- 更新フォーム --}}
-    <form class="product-form"
-        action="{{ route('products.update', $product->id) }}"
-        method="POST"
-        enctype="multipart/form-data">
-        @csrf
+    <main class="container detail-page">
 
-        {{-- 上：2カラム --}}
-        <div class="product-form__top">
-            {{-- 左：画像 + ファイル --}}
-            <div class="product-form__left">
-                <div class="image-wrap">
-                    <img
-                        class="product-form__image"
-                        src="{{ str_contains($product->image, '/')
-          ? asset($product->image)
-          : asset('storage/uploads/' . $product->image) }}"
-                        alt="{{ $product->name }}">
-                </div>
+        {{-- 更新フォーム --}}
+        <form id="update-form" class="product-form"
+            action="{{ route('products.update', $product->id) }}"
+            method="POST"
+            enctype="multipart/form-data">
+            @csrf
 
-                @php
-                $storagePath = 'storage/uploads/' . $product->image;
-                $imagePath = file_exists(public_path($storagePath))
-                ? $storagePath
-                : 'fruits-img/' . $product->image;
-                @endphp
-
-                <input class="product-form__file" type="file" name="image">
-                @error('image') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+            {{-- パンくず--}}
+            <div class="breadcrumb">
+                <a href="{{ route('products.index') }}">商品一覧</a> &gt; {{ $product->name }}
             </div>
 
-            {{-- 右：入力欄 --}}
-            <div class="product-form__right">
-                <label class="form-label">商品名</label>
-                <input class="form-input" type="text" name="name" value="{{ old('name', $product->name) }}">
-                @error('name') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+            {{-- 上：2カラム --}}
+            <div class="product-form__top">
+                {{-- 左：画像 + ファイル --}}
+                <div class="product-form__left">
+                    <div class="image-wrap">
+                        <img
+                            class="product-form__image"
+                            src="{{ str_contains($product->image, '/')
+                        ? asset($product->image)
+                        : asset('storage/uploads/' . $product->image) }}"
+                            alt="{{ $product->name }}">
+                    </div>
 
-                <label class="form-label">値段</label>
-                <input class="form-input" type="text" name="price" value="{{ old('price', $product->price) }}">
-                @error('price') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+                    @php
+                    $storagePath = 'storage/uploads/' . $product->image;
+                    $imagePath = file_exists(public_path($storagePath))
+                    ? $storagePath
+                    : 'fruits-img/' . $product->image;
+                    @endphp
 
-                <p class="form-label">季節</p>
-
-                @php
-                $selectedSeasons = old('seasons', $product->seasons->pluck('id')->toArray());
-                @endphp
-
-                <div class="season">
-                    @foreach($seasons as $season)
-                    <label>
-                        <input type="checkbox"
-                            name="seasons[]"
-                            value="{{ $season->id }}"
-                            @checked(in_array($season->id, $selectedSeasons))>
-                        {{ $season->name }}
-                    </label>
-                    @endforeach
+                    <input class="product-form__file" type="file" name="image">
+                    @error('image') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
                 </div>
 
-                @error('seasons')
-                <p class="error-text">{!! nl2br(e($message)) !!}</p>
-                @enderror
+                {{-- 右：入力欄 --}}
+                <div class="product-form__right">
+                    <label class="form-label">商品名</label>
+                    <input class="form-input" type="text" name="name" value="{{ old('name', $product->name) }}">
+                    @error('name') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+
+                    <label class="form-label">値段</label>
+                    <input class="form-input" type="text" name="price" value="{{ old('price', $product->price) }}">
+                    @error('price') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+
+                    <p class="form-label">季節</p>
+
+                    @php
+                    $selectedSeasons = old('seasons', $product->seasons->pluck('id')->toArray());
+                    @endphp
+
+                    <div class="season">
+                        @foreach($seasons as $season)
+                        <label>
+                            <input type="checkbox"
+                                name="seasons[]"
+                                value="{{ $season->id }}"
+                                @checked(in_array($season->id, $selectedSeasons))>
+                            {{ $season->name }}
+                        </label>
+                        @endforeach
+                    </div>
+
+                    @error('seasons')
+                    <p class="error-text">{!! nl2br(e($message)) !!}</p>
+                    @enderror
+                </div>
             </div>
-        </div>
 
-        {{-- 下：説明（横いっぱい） --}}
-        <div class="product-form__bottom">
-            <label class="form-label">商品説明</label>
-            <textarea class="form-textarea" name="description">{{ old('description', $product->description) }}</textarea>
-            @error('description') <p class="error-text">{!! nl2br(e($message)) !!}</p>@enderror
-        </div>
+            {{-- 下：説明（横いっぱい） --}}
+            <div class="product-form__bottom">
+                <div class="product-form__narrow">
+                    <label class="form-label">商品説明</label>
+                    <textarea class="form-textarea" name="description">{{ old('description', $product->description) }}</textarea>
+                    @error('description')
+                    <p class="error-text">{!! nl2br(e($message)) !!}</p>
+                    @enderror
+                </div>
+            </div>
 
-        {{-- ボタン --}}
-        <div class="actions-wrap">
-            <a href="{{ route('products.index') }}" class="btn btn--gray">戻る</a>
-            <button type="submit" class="btn btn--yellow">変更を保存</button>
-    </form>
+            {{-- ボタンエリア --}}
+            <div class="actions-wrap">
+                <div class="actions-center">
+                    <a href="{{ route('products.index') }}" class="btn btn-gray">戻る</a>
+                    <button type="submit" class="btn btn-yellow">変更を保存</button>
+                </div>
 
-    {{-- 削除（右下のゴミ箱） --}}
-    <form class="delete" action="{{ route('products.delete', $product->id) }}" method="POST">
-        @csrf
-        <button class="delete__btn" type="submit" onclick="return confirm('削除しますか？')">
-            <img src="{{ asset('images/trash.png') }}" alt="削除">
-        </button>
-    </form>
-    </div>
-    </div>
+                {{-- ※削除ボタンは「更新formの中」に置いてOK（ただし formタグは置かない） --}}
+                <button
+                    class="delete__btn"
+                    type="submit"
+                    form="delete-form"
+                    onclick="return confirm('削除しますか？')">
+                    <img src="{{ asset('images/trash.png') }}" alt="削除">
+                </button>
+            </div>
+
+            {{-- 削除フォーム（更新フォームの外に出す！） --}}
+            <form id="delete-form" action="{{ route('products.delete', $product->id) }}" method="POST">
+                @csrf
+            </form>
+
+    </main>
 </body>
 
 </html>

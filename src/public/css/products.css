@@ -3,12 +3,6 @@
     box-sizing: border-box;
 }
 
-.main {
-    display: flex;
-    padding: 0 40px;
-    gap: 40px;
-}
-
 body {
     margin: 0;
     background-color: #f5f5f5;
@@ -33,21 +27,7 @@ body {
     margin: 18px 0 20px;
 }
 
-/* 一覧画面 */
-.page-products-index .layout {
-    max-width: 1100px;
-    margin: 0;
-    padding: 0 40px;
-    max-width: 1100px;
-        margin-left: 40px;
-        /* 左に寄せつつ余白 */
-        margin-right: auto;
-}
-.page-products-index .sidebar {
-    width: 340px;
-    flex: 0 0 340px;
-    padding-left: 0;
-}
+
 
 .page-products-index .sidebar__title {
     font-size: 40px;
@@ -116,20 +96,23 @@ body {
     font-size: 40px;
 }
 
-.product-list,
 .product-grid {
-/* 画面が広がったらカードも広がるように */
-    max-width: 1100px;
+    max-width: none;
     width: 100%;
-    margin: 0 ;
+    margin: 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(280px, 1fr));
     gap: 30px;
-
-    /* ここが重要：1件でも左寄せ */
-    justify-content: start;
     justify-items: start;
     place-content: start;
+}
+
+.product-list {
+    width: 100%;
+    max-width: 1100px;
+    /* 必要なら */
+    margin: 0 auto;
+    /* 中央寄せしたいなら */
 }
 
 .product-card {
@@ -194,8 +177,6 @@ body {
     text-decoration: none;
     font-size: 14px;
     line-height: 1;
-    background: #f2f2f2;
-    color: #333;
 }
 
 .pagination-item.is-active .pagination-link {
@@ -248,6 +229,8 @@ body {
 
 /* 上：2カラム */
 .product-form__top {
+    max-width: 850px;
+    margin: 0 auto;
     display: flex;
     gap: 60px;
     align-items: flex-start;
@@ -276,6 +259,7 @@ body {
 
 /* 入力 */
 .form-label {
+    width: 100%;
     display: block;
     margin-top: 16px;
     margin-bottom: 6px;
@@ -297,15 +281,8 @@ body {
 
 /* 説明 */
 .product-form__bottom {
-    margin-top: 26px;
-}
-
-.form-textarea {
     width: 100%;
-    max-width: 850px;
-    min-height: 170px;
-    padding: 12px;
-    box-sizing: border-box;
+    margin-top: 26px;
 }
 
 /* エラー */
@@ -317,7 +294,7 @@ body {
 
 /* ボタン */
 .actions {
-    width: 850px;
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -326,52 +303,6 @@ body {
 
 .actions form {
     margin-left: 20px;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 40px;
-    border-radius: 6px;
-    text-decoration: none;
-    /* ←リンクの下線消す */
-    border: none;
-    cursor: pointer;
-}
-
-.btn--gray {
-justify-content: center;
-    width: 200px;
-    background: #d9d9d9;
-    color: #333;
-}
-
-.btn--yellow {
-    width: 200px;
-    background: #f2c200;
-    color: #333;
-}
-
-.actions-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-/* ゴミ箱：*/
-.delete__btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.delete__btn img {
-    width: 35px;
-    height: 35px;
-    display: block;
 }
 
 /* パンくず */
@@ -443,6 +374,7 @@ justify-content: center;
     font-size: 28px;
     font-weight: 700;
     margin: 10px 0 30px;
+    margin-top: 50px;
 }
 
 .product-form {
@@ -460,8 +392,8 @@ justify-content: center;
     margin-bottom: 10px;
 }
 
-.form-label {
-    font-weight: 700;
+.badge-required {
+    margin-left: 8px;
 }
 
 .badge-required {
@@ -491,11 +423,13 @@ justify-content: center;
 
 .form-textarea {
     width: 100%;
+    max-width: 100%;
     min-height: 180px;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
+    box-sizing: border-box;
 }
 
 .file-input {
@@ -562,6 +496,7 @@ justify-content: center;
 }
 
 .btn {
+    padding: 12px 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -591,13 +526,6 @@ justify-content: center;
     height: auto;
     margin: 12px 0;
     border-radius: 8px;
-}
-
-.container {
-    max-width: 1200px;
-    /* ←ここ重要 */
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 /* 左カラム固定 */
@@ -673,17 +601,6 @@ justify-content: center;
     padding: 0;
 }
 
-.page-title {
-    margin-top: 150px;
-    margin-bottom: 5px;
-}
-
-/* 画面全体を中央寄せの箱にする */
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .page-header {
     display: flex;
     align-items: center;
@@ -692,18 +609,6 @@ justify-content: center;
     max-width: 1100px;
     margin: 0;
     padding: 0;
-}
-
-.page-header .btn-add {
-    margin-left: auto;
-    /* 右端へ */
-}
-
-/* 一覧ページだけのレイアウトはこれに統一 */
-.page-products-index .products-page {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 40px;
 }
 
 /* タイトル行（商品一覧 + 追加ボタン） */
@@ -744,5 +649,236 @@ justify-content: center;
 
 .product-form {
     max-width: 1100px;
-    margin-top: 60px;
+    margin-top: 80px;
+}
+
+.main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main__content {
+    width: 100%;
+    max-width: 1200px;
+    /* ← ここ重要 */
+    margin: 0 auto;
+}
+
+/* 一覧ページの外枠を広げる（3列入るように） */
+.page-products-index .products-page {
+    max-width: 1400px;
+        /* 3列出したいならまずここ */
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        /* 余白は好み */
+}
+
+.content {
+    flex: 1;
+}
+
+/* 一覧ページだけ、右側(main)を伸ばす */
+.page-products-index .layout {
+    max-width: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+            gap: 30px;
+}
+
+.page-products-index .layout>.content {
+    flex: 1 1 auto;
+    min-width: 0;
+    /* flexで重要：はみ出し/縮まない対策 */
+}
+
+/* グリッドも上限で潰れてたら解除 */
+.page-products-index .product-grid {
+    width: 100%;
+    max-width: none;
+    display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 30px;
+        /* 仕様書に合わせて */
+}
+
+/* 一覧画面 */
+.page-products-index .layout {
+    display: flex;
+        gap: 30px;
+        /* あるなら合わせる */
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.page-products-index .sidebar {
+    flex: 0 0 340px;
+}
+
+/* 外枠（ページ全体の基準幅） */
+.page-products-index .products-page {
+    width: 100%;
+    max-width: 1400px;
+    /* ←ここで広げる（必要なら1500でも可） */
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* タイトル行（商品一覧 + 追加ボタン） */
+.page-products-index .page-header {
+    max-width: 1400px;
+    margin: 0 auto 24px;
+    padding: 0 40px;
+}
+
+/* 2カラム全体（sidebar + content） */
+.page-products-index .layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 30px;
+    /* 好みで */
+}
+
+/* sidebar固定 / contentを伸ばす */
+.page-products-index .sidebar {
+    flex: 0 0 340px;
+}
+
+.page-products-index .content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* ページネーションも揃える（任意） */
+.page-products-index .pagination-wrap {
+    max-width: 1400px;
+    margin: 24px auto 0;
+    padding: 0 40px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+/* 詳細ページ：ボタン3つを中央に */
+.page-products-detail .actions-wrap {
+    width: 100%;
+}
+
+/* 今の button-group はそのままでOK */
+.page-products-detail .button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.actions-wrap.button-group .delete {
+    margin: 0;
+}
+
+.actions-wrap.button-group .delete__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-gray {
+    justify-content: center;
+    width: 200px;
+    background: #d9d9d9;
+    color: #333;
+}
+
+.btn-yellow {
+    width: 200px;
+    background: #f2c200;
+    color: #333;
+}
+
+.product-form .delete__btn img {
+        width: 40px;
+        /* 仕様書っぽい大きさに */
+        height: 40px;
+        display: block;
+    }
+
+/* ボタン行（基準幅=850px） */
+.actions-wrap {
+    max-width: 850px;
+    margin: 24px auto 0;
+    position: relative;
+    /* ゴミ箱absoluteの基準 */
+}
+
+.actions-center {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+/* ゴミ箱 */
+.delete__btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.detail-page.delete__btn img {
+    width: 40px;
+    height: 40px;
+    display: block;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.product-form__narrow {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.form-label,
+.form-textarea {
+    width: 100%;
+}
+
+/* register: ラベル横に必須を置く */
+.product-register .form-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* ← space-between を殺す */
+    gap: 8px;
+}
+
+/* もし過去に form-label に幅を付けてたら、registerでは無効化 */
+.product-register .form-label {
+    width: auto;
+    display: inline-block;
+}
+
+/* 必須バッジの余白（好みで） */
+.product-register .badge-required {
+    margin-left: 8px;
 }
