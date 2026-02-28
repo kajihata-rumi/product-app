@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     {{-- ヘッダー（ロゴだけ） --}}
     <header class="header">
         <div class="header__logo">mogitate</div>
@@ -48,42 +49,54 @@
                     : 'fruits-img/' . $product->image;
                     @endphp
 
-                    <input class="product-form__file" type="file" name="image">
-                    @error('image') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
                 </div>
 
-                {{-- 右：入力欄 --}}
-                <div class="product-form__right">
-                    <label class="form-label">商品名</label>
-                    <input class="form-input" type="text" name="name" value="{{ old('name', $product->name) }}">
-                    @error('name') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+                {{-- プレビュー枠--}}
+                <img
+                    id="imagePreview"
+                    class="image-preview"
+                    src=""
+                    alt="プレビュー"
+                    style="display:none;">
 
-                    <label class="form-label">値段</label>
-                    <input class="form-input" type="text" name="price" value="{{ old('price', $product->price) }}">
-                    @error('price') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
+                <input class="file-input" type="file" name="image">
+                @error('image')
+                <p class="error-text">{!! nl2br(e($message)) !!}</p>
+                @enderror
+            </div>
 
-                    <p class="form-label">季節</p>
+            {{-- 右：入力欄 --}}
+            <div class="product-form__right">
+                <label class="form-label">商品名</label>
+                <input class="form-input" type="text" name="name" value="{{ old('name', $product->name) }}">
+                @error('name') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
 
-                    @php
-                    $selectedSeasons = old('seasons', $product->seasons->pluck('id')->toArray());
-                    @endphp
+                <label class="form-label">値段</label>
+                <input class="form-input" type="text" name="price" value="{{ old('price', $product->price) }}">
+                @error('price') <p class="error-text">{!! nl2br(e($message)) !!}</p> @enderror
 
-                    <div class="season">
-                        @foreach($seasons as $season)
-                        <label>
-                            <input type="checkbox"
-                                name="seasons[]"
-                                value="{{ $season->id }}"
-                                @checked(in_array($season->id, $selectedSeasons))>
-                            {{ $season->name }}
-                        </label>
-                        @endforeach
-                    </div>
+                <p class="form-label">季節</p>
 
-                    @error('seasons')
-                    <p class="error-text">{!! nl2br(e($message)) !!}</p>
-                    @enderror
+                @php
+                $selectedSeasons = old('seasons', $product->seasons->pluck('id')->toArray());
+                @endphp
+
+                <div class="season">
+                    @foreach($seasons as $season)
+                    <label>
+                        <input type="checkbox"
+                            name="seasons[]"
+                            value="{{ $season->id }}"
+                            @checked(in_array($season->id, $selectedSeasons))>
+                        {{ $season->name }}
+                    </label>
+                    @endforeach
                 </div>
+
+                @error('seasons')
+                <p class="error-text">{!! nl2br(e($message)) !!}</p>
+                @enderror
+            </div>
             </div>
 
             {{-- 下：説明（横いっぱい） --}}
@@ -118,8 +131,25 @@
             <form id="delete-form" action="{{ route('products.delete', $product->id) }}" method="POST">
                 @csrf
             </form>
-
     </main>
+    <script>
+        const fileInput = document.querySelector('.file-input');
+        const preview = document.getElementById('imagePreview');
+
+        if (fileInput && preview) {
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
 </body>
 
 </html>
